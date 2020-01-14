@@ -2,6 +2,7 @@ version: "3"
 
 services:
   application:
+    container_name: application_root
     build:
       context: .
       dockerfile: ./docker/Dockerfile
@@ -15,6 +16,29 @@ services:
       - ./src:/var/www/application
     networks:
       - laravel
+
+  mysql:
+    container_name: application_mysql
+    build: ./docker/mysql/
+    env_file: docker/mysql/conf/env.yml
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3620:3306"
+    volumes:
+      - application_mysql:/data/mysql
+    networks:
+      - laravel
+
+  redis:
+    container_name: application_redis
+    image: redis
+    ports:
+      - "6620:6379"
+    networks:
+      - laravel
+
+volumes:
+  application_mysql:
 
 networks:
   laravel:

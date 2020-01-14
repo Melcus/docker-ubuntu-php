@@ -99,4 +99,6 @@ RUN ln -s /etc/conf/php/90-application.ini /etc/php/7.4/fpm/conf.d/\
 
 VOLUME ["/var/www/application"]
 
+WORKDIR /var/www/application
+
 CMD ["/etc/conf/start.sh"]
