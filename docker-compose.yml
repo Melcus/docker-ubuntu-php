@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  application:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "5620:80"
+    environment:
+      - APP_ENV=local
+      - VIRTUAL_HOST=application.local
+      - VIRTUAL_PORT=80
+    volumes:
+      - ./src:/var/www/application
+    networks:
+      - laravel
+
+networks:
+  laravel:
